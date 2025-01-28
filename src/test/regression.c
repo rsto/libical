@@ -5934,6 +5934,16 @@ static void test_icalparamiter(void)
     icalcomponent_free(comp);
 }
 
+static void test_icalreqstattype_debug(void)
+{
+    struct icalreqstattype v = icalreqstattype_from_string("2.0;Success");
+    ok("'debug' field is null", v.debug == 0);
+
+    v = icalreqstattype_from_string("3.1;Invalid property value;DTSTART:96-Apr-01");
+    ok("'debug' field contains extdata",
+            (v.debug != 0) && !strcmp(v.debug, "DTSTART:96-Apr-01"));
+}
+
 int main(int argc, char *argv[])
 {
 #if !defined(HAVE_UNISTD_H)
