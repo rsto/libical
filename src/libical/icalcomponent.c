@@ -428,6 +428,28 @@ void icalcomponent_remove_property(icalcomponent *component, icalproperty *prope
     }
 }
 
+void icalcomponent_remove_property_by_kind(icalcomponent *component, icalproperty_kind kind)
+{
+    pvl_elem itr, next_itr;
+
+    icalerror_check_arg_rv((component != 0), "component");
+
+    for (itr = pvl_head(component->properties); itr != 0; itr = next_itr) {
+        next_itr = pvl_next(itr);
+
+        icalproperty *property = pvl_data(itr);
+        if (kind == ICAL_ANY_PROPERTY || icalproperty_isa(property) == kind) {
+            if (component->property_iterator == itr) {
+                component->property_iterator = pvl_next(itr);
+            }
+
+            (void)pvl_remove(component->properties, itr);
+            icalproperty_set_parent(property, 0);
+            icalproperty_free(property);
+        }
+    }
+}
+
 int icalcomponent_count_properties(icalcomponent *component, icalproperty_kind kind)
 {
     int count = 0;
