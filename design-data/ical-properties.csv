@@ -169,4 +169,12 @@
 "LINK","134","LINK","NO"
 "REFID","135","TEXT","TEXT"
 
+"#draft-ietf-calext-jscalendar-icalendar
+"JSID","136","TEXT","TEXT"
+"JSPROP","137","TEXT","TEXT"
+
+#draft-stepanek-icalendar-jscalendar-extensions
+"COORDINATES","138","URI","NO"
+"SHOW-WITHOUT-TIME","139","BOOLEAN","NO"
+
 "#NOTE for updaters.  Preserve the icalproperty_kind Enum values to aid forward compatibility"

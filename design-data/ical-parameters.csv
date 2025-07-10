@@ -85,6 +85,10 @@
 "GAP","55","struct icaldurationtype",
 "LINKREL","56,"const char*",
 
+"#draft-ietf-calext-jscalendar-icalendar
+"JSID","57,"const char*",
+"JSPTR","58,"const char*",
+
 "#NOTE for updaters.  Preserve the icalparameter_kind Enum values to aid forward compatibility"
 "# New Enum values for an existing icalparameter_kind should be inserted before the corresponding NONE value"
 "# New icalparamter_kind types should start their Enum value after the highest NONE value (currently 22399)"
