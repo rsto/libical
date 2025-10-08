@@ -1329,7 +1329,7 @@ icalcomponent_kind icalcomponent_string_to_kind(const char *string)
     return ICAL_NO_COMPONENT;
 }
 
-icalcompiter icalcomponent_begin_component(icalcomponent *component, icalcomponent_kind kind)
+icalcompiter icalcomponent_begin_component(const icalcomponent *component, icalcomponent_kind kind)
 {
     icalcompiter itr;
     icalpvl_elem i;
@@ -1352,7 +1352,7 @@ icalcompiter icalcomponent_begin_component(icalcomponent *component, icalcompone
     return icalcompiter_null;
 }
 
-icalcompiter icalcomponent_end_component(icalcomponent *component, icalcomponent_kind kind)
+icalcompiter icalcomponent_end_component(const icalcomponent *component, icalcomponent_kind kind)
 {
     icalcompiter itr;
     icalpvl_elem i;
@@ -1423,7 +1423,7 @@ icalcomponent *icalcompiter_deref(icalcompiter *i)
     return icalpvl_data(i->iter);
 }
 
-icalpropiter icalcomponent_begin_property(icalcomponent *component, icalproperty_kind kind)
+icalpropiter icalcomponent_begin_property(const icalcomponent *component, icalproperty_kind kind)
 {
     icalerror_check_arg_re(component != 0, "component", icalpropiter_null);
 

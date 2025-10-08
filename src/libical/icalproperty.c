@@ -1099,7 +1099,7 @@ struct icaltimetype icalproperty_get_datetime_with_component(icalproperty *prop,
 
 static const icalparamiter icalparamiter_null = {ICAL_NO_PARAMETER, 0};
 
-icalparamiter icalproperty_begin_parameter(icalproperty *property, icalparameter_kind kind)
+icalparamiter icalproperty_begin_parameter(const icalproperty *property, icalparameter_kind kind)
 {
     icalerror_check_arg_re(property != 0, "property", icalparamiter_null);
 

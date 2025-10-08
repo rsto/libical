@@ -150,10 +150,10 @@ LIBICAL_ICAL_EXPORT icalcomponent *icalcomponent_get_next_component(icalcomponen
                                                                     icalcomponent_kind kind);
 
 /* Using external iterators */
-LIBICAL_ICAL_EXPORT icalcompiter icalcomponent_begin_component(icalcomponent *component,
+LIBICAL_ICAL_EXPORT icalcompiter icalcomponent_begin_component(const icalcomponent *component,
                                                                icalcomponent_kind kind);
 
-LIBICAL_ICAL_EXPORT icalcompiter icalcomponent_end_component(icalcomponent *component,
+LIBICAL_ICAL_EXPORT icalcompiter icalcomponent_end_component(const icalcomponent *component,
                                                              icalcomponent_kind kind);
 
 LIBICAL_ICAL_EXPORT icalcomponent *icalcompiter_next(icalcompiter *i);
@@ -162,7 +162,7 @@ LIBICAL_ICAL_EXPORT icalcomponent *icalcompiter_prior(icalcompiter *i);
 
 LIBICAL_ICAL_EXPORT icalcomponent *icalcompiter_deref(icalcompiter *i);
 
-LIBICAL_ICAL_EXPORT icalpropiter icalcomponent_begin_property(icalcomponent *component,
+LIBICAL_ICAL_EXPORT icalpropiter icalcomponent_begin_property(const icalcomponent *component,
                                                               icalproperty_kind kind);
 
 LIBICAL_ICAL_EXPORT icalproperty *icalpropiter_next(icalpropiter *i);

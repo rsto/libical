@@ -221,7 +221,7 @@ typedef struct icalparamiter {
     icalpvl_elem iter;
 } icalparamiter;
 
-LIBICAL_ICAL_EXPORT icalparamiter icalproperty_begin_parameter(icalproperty *property, icalparameter_kind kind);
+LIBICAL_ICAL_EXPORT icalparamiter icalproperty_begin_parameter(const icalproperty *property, icalparameter_kind kind);
 
 LIBICAL_ICAL_EXPORT icalparameter *icalparamiter_next(icalparamiter *i);
 
