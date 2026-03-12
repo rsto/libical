@@ -6973,6 +6973,84 @@ static void test_icalcomponent_remove_property_by_kind(void)
     icalcomponent_free(test_comp);
 }
 
+static void test_icalproperty_remove_parameter_by_name(void)
+{
+    icalproperty *prop;
+    icalparameter *param;
+
+    icalproperty *p;
+
+    // Remove known IANA parameter by name.
+    prop = icalproperty_new_from_string("ORGANIZER;CN=\"Foo\":mailto:foo@example.com");
+    param = icalproperty_get_first_parameter(prop, ICAL_CN_PARAMETER);
+    ok("parse CN", param != NULL);
+
+    p = icalproperty_clone(prop);
+    icalproperty_remove_parameter_by_name(p, "CN");
+    ok("remove \"CN\"", icalproperty_get_first_parameter(p, ICAL_CN_PARAMETER) == NULL);
+    icalproperty_free(p);
+
+    p = icalproperty_clone(prop);
+    icalproperty_remove_parameter_by_name(p, "cn");
+    ok("remove \"cn\"", icalproperty_get_first_parameter(p, ICAL_CN_PARAMETER) == NULL);
+    icalproperty_free(p);
+
+    p = icalproperty_clone(prop);
+    icalproperty_remove_parameter_by_name(p, "Cn");
+    ok("remove \"Cn\"", icalproperty_get_first_parameter(p, ICAL_CN_PARAMETER) == NULL);
+    icalproperty_free(p);
+
+    icalproperty_free(prop);
+
+    // Remove x-parameter by name.
+    prop = icalproperty_new_from_string("SUMMARY;X-FOO=bar:baz");
+    param = icalproperty_get_first_parameter(prop, ICAL_X_PARAMETER);
+    str_is("parse X-FOO", icalparameter_get_xname(param), "X-FOO");
+
+    p = icalproperty_clone(prop);
+    icalproperty_remove_parameter_by_name(p, "X-FOO");
+    ok("remove \"X-FOO\"", icalproperty_get_first_parameter(p, ICAL_X_PARAMETER) == NULL);
+    icalproperty_free(p);
+
+    p = icalproperty_clone(prop);
+    icalproperty_remove_parameter_by_name(p, "x-foo");
+    ok("remove \"x-foo\"", icalproperty_get_first_parameter(p, ICAL_X_PARAMETER) == NULL);
+    icalproperty_free(p);
+
+    p = icalproperty_clone(prop);
+    icalproperty_remove_parameter_by_name(p, "X-Foo");
+    ok("remove \"X-Foo\"", icalproperty_get_first_parameter(p, ICAL_X_PARAMETER) == NULL);
+    icalproperty_free(p);
+
+    icalproperty_free(prop);
+
+    // Remove unknown IANA parameter by name.
+    ical_set_unknown_token_handling_setting(ICAL_ASSUME_IANA_TOKEN);
+
+    prop = icalproperty_new_from_string("SUMMARY;FOO=bar:baz");
+    param = icalproperty_get_first_parameter(prop, ICAL_IANA_PARAMETER);
+    str_is("parse FOO", icalparameter_get_iana_name(param), "FOO");
+
+    p = icalproperty_clone(prop);
+    icalproperty_remove_parameter_by_name(p, "FOO");
+    ok("remove \"FOO\"", icalproperty_get_first_parameter(p, ICAL_IANA_PARAMETER) == NULL);
+    icalproperty_free(p);
+
+    p = icalproperty_clone(prop);
+    icalproperty_remove_parameter_by_name(p, "foo");
+    ok("remove \"foo\"", icalproperty_get_first_parameter(p, ICAL_IANA_PARAMETER) == NULL);
+    icalproperty_free(p);
+
+    p = icalproperty_clone(prop);
+    icalproperty_remove_parameter_by_name(p, "Foo");
+    ok("remove \"Foo\"", icalproperty_get_first_parameter(p, ICAL_IANA_PARAMETER) == NULL);
+    icalproperty_free(p);
+
+    icalproperty_free(prop);
+
+    ical_set_unknown_token_handling_setting(ICAL_TREAT_AS_ERROR);
+}
+
 static void test_icalcomponent_get_duration(void)
 {
 #define assert_icalcomponent_get_duration(desc, want, ctlines)                           \
@@ -7513,6 +7591,7 @@ int main(int argc, const char *argv[])
     test_run("Test creating IANA parameters", test_create_iana_parameter, do_test, do_header);
     test_run("Test parsing IANA parameter enum values", test_parse_iana_parameter_value, do_test, do_header);
     test_run("Test creating IANA parameter enum values", test_create_iana_parameter_value, do_test, do_header);
+    test_run("Test removing parameter by name", test_icalproperty_remove_parameter_by_name, do_test, do_header);
     /** OPTIONAL TESTS go here... **/
 
 #if defined(LIBICAL_CXX_BINDINGS)

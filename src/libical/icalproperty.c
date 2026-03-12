@@ -660,7 +660,7 @@ void icalproperty_remove_parameter_by_name(icalproperty *prop, const char *name)
             continue;
         }
 
-        if (0 == strcmp(kind_string, name)) {
+        if (0 == strcasecmp(kind_string, name)) {
             (void)icalpvl_remove(prop->parameters, p);
             icalparameter_free(param);
             break;
